@@ -1260,7 +1260,16 @@ index bb0faea2e04b..a8053954057f 100644
  			}
  			break;
  
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+@@ -11355,7 +11355,7 @@ static int should_we_balance(struct lb_env *env)
+		 * balancing cores, but remember the first idle SMT CPU for
+		 * later consideration.  Find CPU on an idle core first.
+		 */
+-		if (!(env->sd->flags & SD_SHARE_CPUCAPACITY) && !is_core_idle(cpu)) {
++		if (!(env->sd->flags & SD_SHARE_CPUCAPACITY) && !sched_smt_siblings_idle(cpu)) {
+			if (idle_smt == -1)
+				idle_smt = cpu;
+			/*
+
 index c55d6c97ca9c..6f80bb187d59 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
